@@ -49,6 +49,16 @@ def update_persona(persona_id: int, persona_in: PersonaUpdate, db: Session = Dep
     return persona_service.update_persona(db, persona_id, persona_in)
 
 
+@router.delete("/reset", status_code=status.HTTP_200_OK)
+def reset_personas(db: Session = Depends(get_db)):
+    """Elimina todos los registros de la tabla personas."""
+    count = persona_service.reset_personas(db)
+    return {
+        "message": "Base de datos limpiada. Se eliminaron todos los registros.",
+        "deleted_count": count
+    }
+
+
 @router.delete("/{persona_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_persona(persona_id: int, db: Session = Depends(get_db)):
     """Delete a Persona by ID via service layer."""
