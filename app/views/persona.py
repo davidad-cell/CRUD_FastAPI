@@ -42,3 +42,7 @@ class PersonaRead(BaseModel):
     created_at: datetime
 
     model_config = {"from_attributes": True}
+
+    class PoblarRequest(BaseModel):
+        """ Schema usado para poblar con Faker(entrada)"""
+        cantidad: int
