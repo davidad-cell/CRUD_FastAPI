@@ -15,6 +15,17 @@ def create_persona(persona_in: PersonaCreate, db: Session = Depends(get_db)):
     # Let domain errors bubble up to global handlers
     return persona_service.create_persona(db, persona_in)
 
+@router.post("/poblar", response_model=PoblarResponse, status_code=status.HTTP_201_CREATED)
+def poblar_personas(payload: PoblarRequest, db: Session = Depends(get_db)):
+    cantidad = payload.cantidad
+    if cantidad <= 0 or cantidad > 1000:
+        raise HTTPException(status_code=400, detail="La cantidad debe ser mayor a 0 y menor o igual a 1000.")
+    count = persona_service.poblar_personas(db, cantidad)
+    return PoblarResponse(
+        message=f"Se insertaron {count} registros ficticios en la base de datos.",
+        inserted_count=count
+    )
+
 
 @router.get("", response_model=List[PersonaRead])
 def list_personas(
