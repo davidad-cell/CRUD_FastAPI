@@ -26,6 +26,10 @@ def poblar_personas(payload: PoblarRequest, db: Session = Depends(get_db)):
         inserted_count=count
     )
 
+@router.get("/estadisticas/dominios", status_code=status.HTTP_200_OK)
+def get_stats_dominios(db: Session = Depends(get_db)):
+    """Punto C: Retorna conteo de usuarios por dominio de correo[cite: 52]."""
+    return persona_service.get_stats_dominios(db)
 
 @router.get("", response_model=List[PersonaRead])
 def list_personas(
