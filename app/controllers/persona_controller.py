@@ -36,6 +36,10 @@ def get_stats_edad(db: Session = Depends(get_db)):
     """Punto D: Calcula estadísticas de edad (promedio, min, max)[cite: 60]."""
     return persona_service.get_stats_edad(db)
 
+@router.get("/buscar/{termino}", status_code=status.HTTP_200_OK)
+def search_personas(termino: str, db: Session = Depends(get_db)):
+    """Punto E: Busca término en nombre, apellido o email[cite: 70]."""
+    return persona_service.search_personas(db, termino)
 
 @router.get("", response_model=List[PersonaRead])
 def list_personas(
