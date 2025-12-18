@@ -43,12 +43,16 @@ class PersonaRead(BaseModel):
 
     model_config = {"from_attributes": True}
 
-    class PoblarRequest(BaseModel):
-        """ Schema usado para poblar con Faker(entrada)"""
-        cantidad: int
+class PoblarRequest(BaseModel):
+    """Schema usado para poblar la base con Faker(Entrada)."""
+    cantidad:int
+    
+
+        
+        
 
 
-class PoblarResponse(Basemodel):
+class PoblarResponse(BaseModel):
     """Schema usado para poblar la base con Faker."""
     message:str
     inserted_count:int
