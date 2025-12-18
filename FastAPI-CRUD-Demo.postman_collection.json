@@ -33,6 +33,20 @@
           }
         },
         {
+          "name": "Poblar Personas",
+          "request": {
+            "method": "POST",
+            "header": [ {"key": "Content-Type", "value": "application/json" } ],
+            "body": {
+              "mode":"raw",
+              "raw": "{\n  \"cantidad\": 10\n}"
+            },
+            "url": { "raw": "{{base_url}}/personas/poblar", "host": ["{{base_url}}"], "path": ["personas", "poblar"] }
+
+
+          }
+        },  
+        {
           "name": "List Personas",
           "request": {
             "method": "GET",
