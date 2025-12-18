@@ -46,3 +46,9 @@ class PersonaRead(BaseModel):
     class PoblarRequest(BaseModel):
         """ Schema usado para poblar con Faker(entrada)"""
         cantidad: int
+
+
+class PoblarResponse(Basemodel):
+    """Schema usado para poblar la base con Faker."""
+    message:str
+    inserted_count:int
