@@ -63,6 +63,18 @@
           }
         },
         {
+          "name": "Buscador General",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { 
+              "raw": "{{base_url}}/personas/buscar/lopez", 
+              "host": ["{{base_url}}"], 
+              "path": ["personas", "buscar", "lopez"] 
+            }
+          }
+        },
+        {
           "name": "List Personas",
           "request": {
             "method": "GET",
