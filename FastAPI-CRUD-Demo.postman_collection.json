@@ -86,6 +86,15 @@
             "header": [],
             "url": { "raw": "{{base_url}}/personas/{{persona_id}}", "host": ["{{base_url}}"], "path": ["personas", "{{persona_id}}"] }
           }
+        },
+        {
+          "name": "Reset Persona",
+          "request": {
+            "method":"DELETE",
+            "header": [],
+            "url": {  "raw": "{{base_url}}/personas/reset", "host":["{{base_url}}"], "path":["personas", "reset"] }
+          }
+
         }
       ]
     }
