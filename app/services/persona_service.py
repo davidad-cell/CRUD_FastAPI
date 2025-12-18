@@ -1,5 +1,6 @@
 from typing import Sequence
 from sqlalchemy.orm import Session
+from sqlalchemy import or_
 from sqlalchemy.exc import IntegrityError
 from datetime import date
 from ..models.persona import Persona
@@ -98,7 +99,15 @@ def get_stats_edad(db: Session) -> dict:
         "edad_maxima": max(edades)
     }
 
-
+def search_personas(db: Session, termino: str) -> Sequence[Persona]:
+    """Punto E: Busca el término en first_name, last_name O email."""
+    return db.query(Persona).filter(
+        or_( # Aplicación del operador OR solicitado 
+            Persona.first_name.contains(termino),
+            Persona.last_name.contains(termino),
+            Persona.email.contains(termino)
+        )
+    ).all()
 def list_personas(db: Session, skip: int = 0, limit: int = 100) -> Sequence[Persona]:
     """Return paginated list of Personas."""
     return db.query(Persona).offset(skip).limit(limit).all()
