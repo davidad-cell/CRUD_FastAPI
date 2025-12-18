@@ -45,7 +45,15 @@
 
 
           }
-        },  
+        }, 
+         {
+          "name": "Estadísticas por Dominio",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/personas/estadisticas/dominios", "host": ["{{base_url}}"], "path": ["personas", "estadisticas", "dominios"] }
+          }
+        },
         {
           "name": "List Personas",
           "request": {
