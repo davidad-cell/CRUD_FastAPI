@@ -108,6 +108,21 @@ def search_personas(db: Session, termino: str) -> Sequence[Persona]:
             Persona.email.contains(termino)
         )
     ).all()
+def get_reporte_activos(db: Session) -> list:
+    """Punto F: Retorna usuarios activos con proyección reducida[cite: 82, 83]."""
+    # Filtrado por is_active == true [cite: 82]
+    personas_activas = db.query(Persona).filter(Persona.is_active == True).all()
+    
+    # Proyección: se muestran solo id, email, phone y is_active 
+    return [
+        {
+            "id": p.id,
+            "email": p.email,
+            "phone": p.phone,
+            "is_active": p.is_active
+        }
+        for p in personas_activas
+    ]
 def list_personas(db: Session, skip: int = 0, limit: int = 100) -> Sequence[Persona]:
     """Return paginated list of Personas."""
     return db.query(Persona).offset(skip).limit(limit).all()
