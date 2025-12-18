@@ -1,7 +1,7 @@
 from typing import Sequence
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
-
+from datetime import date
 from ..models.persona import Persona
 from ..views.persona import PersonaCreate, PersonaUpdate
 from .errors import PersonaNotFoundError, EmailAlreadyExistsError
@@ -74,6 +74,30 @@ def get_stats_dominios(db: Session) -> dict:
         except (IndexError, AttributeError):
             continue
     return conteo
+
+def get_stats_edad(db: Session) -> dict:
+    """Punto D: Calcula edad promedio, mínima y máxima basada en birth_date."""
+    personas = db.query(Persona).all()
+    if not personas:
+        return {"edad_promedio": 0, "edad_minima": 0, "edad_maxima": 0}
+    
+    hoy = date.today()
+    edades = []
+    for p in personas:
+        if p.birth_date:
+            # Cálculo de edad: año actual menos año de nacimiento 
+            edad = hoy.year - p.birth_date.year - ((hoy.month, hoy.day) < (p.birth_date.month, p.birth_date.day))
+            edades.append(edad)
+    
+    if not edades:
+        return {"edad_promedio": 0, "edad_minima": 0, "edad_maxima": 0}
+
+    return {
+        "edad_promedio": sum(edades) // len(edades),
+        "edad_minima": min(edades),
+        "edad_maxima": max(edades)
+    }
+
 
 def list_personas(db: Session, skip: int = 0, limit: int = 100) -> Sequence[Persona]:
     """Return paginated list of Personas."""
