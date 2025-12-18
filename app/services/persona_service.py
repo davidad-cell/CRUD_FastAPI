@@ -36,6 +36,33 @@ def create_persona(db: Session, payload: PersonaCreate) -> Persona:
     return obj
 
 
+def poblar_personas(db: Session, cantidad: int) -> int:
+    """ Usando Faker, poblamos la base para una cantidad dada."""
+    
+    dominios_validos = ["gmail.com", "outlook.com", "yahoo.com", "hotmail.com"]
+    registros = []
+    for _ in range(cantidad):
+        first_name = fake.first_name()
+        last_name = fake.last_name()
+        dominio = random.choice(dominios_validos)
+        email = f"{first_name.lower()}.{last_name.lower()}@{dominio}"
+
+        persona = Persona(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            phone=fake.phone_number(),
+            birth_date=fake.date_of_birth(minimum_age=18, maximum_age=90),
+            is_active=random.choice([True, False]),
+            notes=random.choice([fake.sentence(nb_words=6), None])
+        )
+        registros.append(persona)
+        
+    db.add_all(registros)
+    db.commit()
+    return len(registros)
+
+
 def list_personas(db: Session, skip: int = 0, limit: int = 100) -> Sequence[Persona]:
     """Return paginated list of Personas."""
     return db.query(Persona).offset(skip).limit(limit).all()
