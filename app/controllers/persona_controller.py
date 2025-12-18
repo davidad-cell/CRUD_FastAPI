@@ -31,6 +31,12 @@ def get_stats_dominios(db: Session = Depends(get_db)):
     """Punto C: Retorna conteo de usuarios por dominio de correo[cite: 52]."""
     return persona_service.get_stats_dominios(db)
 
+@router.get("/estadisticas/edad", status_code=status.HTTP_200_OK)
+def get_stats_edad(db: Session = Depends(get_db)):
+    """Punto D: Calcula estadísticas de edad (promedio, min, max)[cite: 60]."""
+    return persona_service.get_stats_edad(db)
+
+
 @router.get("", response_model=List[PersonaRead])
 def list_personas(
     skip: int = Query(0, ge=0),
