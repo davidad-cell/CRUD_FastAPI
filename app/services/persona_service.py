@@ -62,6 +62,18 @@ def poblar_personas(db: Session, cantidad: int) -> int:
     db.commit()
     return len(registros)
 
+def get_stats_dominios(db: Session) -> dict:
+    """Punto C: Retorna conteo de usuarios por dominio de correo[cite: 53]."""
+    personas = db.query(Persona).all()
+    conteo = {}
+    for p in personas:
+        try:
+        
+            dominio = p.email.split('@')[1]
+            conteo[dominio] = conteo.get(dominio, 0) + 1
+        except (IndexError, AttributeError):
+            continue
+    return conteo
 
 def list_personas(db: Session, skip: int = 0, limit: int = 100) -> Sequence[Persona]:
     """Return paginated list of Personas."""
