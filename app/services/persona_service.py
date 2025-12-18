@@ -107,3 +107,10 @@ def delete_persona(db: Session, persona_id: int) -> None:
         raise PersonaNotFoundError()
     db.delete(obj)
     db.commit()
+
+
+def reset_personas(db: Session) -> int:
+    """Delete all Personas and return count."""
+    deleted_count = db.query(Persona).delete()
+    db.commit()
+    return deleted_count
