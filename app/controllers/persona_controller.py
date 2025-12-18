@@ -41,6 +41,10 @@ def search_personas(termino: str, db: Session = Depends(get_db)):
     """Punto E: Busca término en nombre, apellido o email[cite: 70]."""
     return persona_service.search_personas(db, termino)
 
+@router.get("/reporte/activos", status_code=status.HTTP_200_OK)
+def get_reporte_activos(db: Session = Depends(get_db)):
+    """Punto F: Listado filtrado de usuarios activos con campos reducidos[cite: 81, 83]."""
+    return persona_service.get_reporte_activos(db)
 @router.get("", response_model=List[PersonaRead])
 def list_personas(
     skip: int = Query(0, ge=0),
